@@ -159,6 +159,7 @@ for x in range(found_num):
         if driver.find_element_by_xpath('//*[@id="grdLA_'+ str(x + 2) +'"]/div[1]').value_of_css_property("background-color") == 'rgba(98, 163, 255, 1)':
             break
         else:
+            print(driver.find_element_by_xpath('//*[@id="grdLA_'+ str(x + 2) +'"]/div[1]').get_property('title'))
             time.sleep(.25)
             part.click()
     #click actions and rev hist. to navigate to pop up to change rev
@@ -166,18 +167,33 @@ for x in range(found_num):
     for i in actions_button:
         i.click()
     rev_button = driver.find_elements_by_xpath('//*[@id="vlsMenu_launchpanel1"]/div[1]')
-    for i in rev_button:
-        i.click()
+    def revhistCheck():
+        try:
+            for i in rev_button:
+                i.click()
+            return True
+        except:
+            return False
+            print('here')
+    while True:
+        if revhistCheck():
+            break
+        else:
+            time.sleep(.25)
 
 #checks to make sure you get the pop up window and if not after a certain ammount of time trys to click again
     timepass = 0
     while len(driver.window_handles) == 1:
         time.sleep(1)
+        timepass += 1
         if timepass >= 5:
-            for i in actions_button:
-                i.click()
-            for i in rev_button:
-                i.click()
+            while True:
+                for i in actions_button:
+                    i.click()
+                if revhistCheck():
+                    break
+                else:
+                    time.sleep(.25)
 
     #switch windows
     window_before = driver.window_handles[0]

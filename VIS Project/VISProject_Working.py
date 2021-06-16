@@ -133,7 +133,7 @@ for x in range(found_num):
         for i in range(99):
             listnum = x-i
             listnum_str = str(listnum)
-            part = driver.find_element_by_id('grdLA_'+listnum_str)
+            part = driver.find_element_by_xpath('//*[@id="grdLA_'+ listnum_str +'"]/div[1]')
             part.click()
         next_page = driver.find_element_by_id('pgng_btnNext')
         next_page.click()

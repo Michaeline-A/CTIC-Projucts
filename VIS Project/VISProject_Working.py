@@ -56,10 +56,11 @@ while check == False:
     else:
         check = True
 ## IDEA: add protections here for the part number to minimize possible damage by user error
-part_num = input("Enter the Part Number: ")
-#message box confirming the user has imputed the right Number
-messagebox.askquestion("askquestion", "Is " + part_num + " the part number you want to enter?")
-
+while True:
+    part_num = input("Enter the Part Number: ")
+    #message box confirming the user has imputed the right Number
+    if messagebox.askyesno("askquestion", "Is " + part_num + " the part number you want to enter?") == True:
+        break
 #go to parts list
 #test code
 driver.get('http://ctictest.visibility.com/VisEN/lookasidepart.aspx?')
@@ -143,7 +144,7 @@ for x in range(found_num):
     #method to find next part
     def partCheck():
         try:
-            part = driver.find_element_by_id('grdLA_'+ str(x + 2))
+            part = driver.find_element_by_xpath('//*[@id="grdLA_'+ str(x + 2) +'"]/div[1]')
             return True
         except:
             return False
@@ -152,7 +153,7 @@ for x in range(found_num):
             break
         else:
             time.sleep(.25)
-    part = driver.find_element_by_id('grdLA_'+ str(x + 2))
+    part = driver.find_element_by_xpath('//*[@id="grdLA_'+ str(x + 2) +'"]/div[1]')
     part.click()
     #makes sure part has actually been selected by checking if it is highlighted
     while True:
